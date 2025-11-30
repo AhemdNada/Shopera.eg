@@ -1,0 +1,226 @@
+.App {
+  text-align: left;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Swiper Navigation Buttons - Custom Button Component */
+.swiper-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeSlider .swiper-nav-btn {
+  width: 40px;
+  height: 40px;
+}
+
+.homeSlider .swiper-nav-prev {
+  left: 10px;
+}
+
+.homeSlider .swiper-nav-next {
+  right: 10px;
+}
+
+.homeSlider .swiper {
+  position: relative;
+}
+
+/* Hide default Swiper navigation buttons */
+.homeSlider .swiper-button-prev,
+.homeSlider .swiper-button-next,
+.productsSlider .swiper-button-prev,
+.productsSlider .swiper-button-next {
+  display: none !important;
+}
+
+.homeSlider .item {
+  width: 100%;
+}
+
+.homeSlider .item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Category Slider */
+.homeCatSlider .swiper {
+  padding: 0;
+}
+
+.homeCatSlider .swiper-slide {
+  width: auto;
+  height: auto;
+}
+
+.homeCatSlider .item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.homeCatSlider .item:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.homeCatSlider .item img {
+  transition: transform 0.3s ease;
+}
+
+.homeCatSlider .item:hover img {
+  transform: scale(1.1);
+}
+
+/* Primary Color */
+.text-primary {
+  color: #ff5252;
+}
+
+.bg-primary {
+  background-color: #ff5252;
+}
+
+.hover\:!bg-primary:hover {
+  background-color: #ff5252 !important;
+}
+
+/* Popular Products Slider */
+.productsSlider .swiper {
+  padding: 0;
+}
+
+.productsSlider .swiper-slide {
+  width: auto;
+  height: auto;
+}
+
+.productsSlider .swiper-nav-btn {
+  width: 35px;
+  height: 35px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.productsSlider .swiper-nav-prev {
+  left: 0;
+}
+
+.productsSlider .swiper-nav-next {
+  right: 0;
+}
+
+.productsSlider .productItem {
+  width: 233px;
+}
+
+.productsSlider .link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.productsSlider .link:hover {
+  color: #ff5252;
+}
+
+/* Popular Products Tabs */
+.rightSec .flex {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  overflow-x: hidden;
+}
+
+.rightSec .flex::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.rightSec .flex button {
+  position: relative;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.rightSec .flex button:focus {
+  outline: none;
+}
+
+/* Hide scrollbar but allow scrolling on mobile if needed */
+@media (max-width: 1024px) {
+  .rightSec .flex {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .rightSec .flex::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Banner Slider - Align all banners on same baseline */
+.smlBtn .swiper-wrapper {
+  display: flex;
+  align-items: flex-end;
+}
+
+.smlBtn .swiper-slide {
+  display: flex;
+  align-items: flex-end;
+}
+
+.smlBtn .bannerBox {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.smlBtn .bannerBox img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
