@@ -15,11 +15,12 @@ const Button = forwardRef(({
   const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed group';
   
   const variantStyles = {
-    primary: 'bg-white text-gray-800 hover:bg-[#ff5252] hover:text-white',
+    primary: 'bg-white text-gray-800 hover:bg-[#ff5252] hover:text-white border border-black',
     navigation: 'bg-white text-gray-800 hover:bg-[#ff5252] hover:text-white rounded-full shadow-md',
     secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
     danger: 'bg-[#ff5252] text-white hover:bg-[#e53935]',
     viewAll: 'bg-white text-gray-800 hover:bg-[#ff5252] hover:text-white border border-gray-300 hover:border-[#ff5252] rounded-md shadow-sm hover:shadow-md',
+    outline: 'bg-white text-gray-800 hover:bg-[#ff5252] hover:text-white border border-black rounded-full',
   };
   
   const sizeStyles = {

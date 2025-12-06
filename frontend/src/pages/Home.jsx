@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { products, testimonials, categories } from '../utils/data';
 import ProductCard from '../components/common/ProductCard';
@@ -13,7 +13,7 @@ import 'swiper/css/free-mode';
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const featuredProducts = products.slice(0, 4);
+  const featuredProducts = useMemo(() => products.slice(0, 4), []);
   
   // Refs for navigation buttons and swiper instances
   const heroSliderPrevRef = useRef(null);
@@ -27,98 +27,73 @@ const Home = () => {
   const latestProductsPrevRef = useRef(null);
   const latestProductsNextRef = useRef(null);
   const latestProductsSwiperRef = useRef(null);
-  const categories = [
-    {
-      name: 'Electronics',
-      image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400&h=300&fit=crop',
-      description: 'Cutting-edge technology',
-      link: '/products?category=electronics'
-    },
-    {
-      name: 'Clothing',
-      image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&h=300&fit=crop',
-      description: 'Style and comfort',
-      link: '/products?category=clothing'
-    },
-    {
-      name: 'Accessories',
-      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&h=300&fit=crop',
-      description: 'Complete your look',
-      link: '/products?category=accessories'
-    },
-    {
-      name: 'Home & Living',
-      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop',
-      description: 'Elevate your space',
-      link: '/products?category=home'
-    }
-  ];
 
-  const heroImages = [
-    '/images/hero-1.png',
-    '/images/hero-2.png',
-    '/images/hero-3.png',
-  ];
+  const heroImages = useMemo(
+    () => ['/images/hero-1.png', '/images/hero-2.png', '/images/hero-3.png'],
+    []
+  );
 
-  const categorySliderItems = [
-    {
-      id: '69048cdd228db479bb634a90',
-      name: 'Fashion',
-      image: 'https://serviceapi.spicezgold.com/download/1763965324754_4819.png',
-      link: '/products?catId=69048cdd228db479bb634a90'
-    },
-    {
-      id: '69048d0c228db479bb634a95',
-      name: 'Electronics',
-      image: 'https://serviceapi.spicezgold.com/download/1761905929738_file_1734525218436_ele.png',
-      link: '/products?catId=69048d0c228db479bb634a95'
-    },
-    {
-      id: '69048d34228db479bb634a9a',
-      name: 'Bags',
-      image: 'https://serviceapi.spicezgold.com/download/1761905971086_file_1734525231018_bag.png',
-      link: '/products?catId=69048d34228db479bb634a9a'
-    },
-    {
-      id: '69048d41228db479bb634a9f',
-      name: 'Footwear',
-      image: 'https://serviceapi.spicezgold.com/download/1761905982766_file_1734525239704_foot.png',
-      link: '/products?catId=69048d41228db479bb634a9f'
-    },
-    {
-      id: '69048d4e228db479bb634aa4',
-      name: 'Groceries',
-      image: 'https://serviceapi.spicezgold.com/download/1761905996339_file_1734525248057_gro.png',
-      link: '/products?catId=69048d4e228db479bb634aa4'
-    },
-    {
-      id: '69048d57228db479bb634aa9',
-      name: 'Beauty',
-      image: 'https://serviceapi.spicezgold.com/download/1761906005923_file_1734525255799_beauty(1).png',
-      link: '/products?catId=69048d57228db479bb634aa9'
-    },
-    {
-      id: '69048d61228db479bb634aae',
-      name: 'Wellness',
-      image: 'https://serviceapi.spicezgold.com/download/1761906015678_file_1734525275367_well.png',
-      link: '/products?catId=69048d61228db479bb634aae'
-    },
-    {
-      id: '69048d6b228db479bb634ab3',
-      name: 'Jewellery',
-      image: 'https://serviceapi.spicezgold.com/download/1761906025549_file_1734525286186_jw.png',
-      link: '/products?catId=69048d6b228db479bb634ab3'
-    }
-  ];
+  const categorySliderItems = useMemo(
+    () => [
+      {
+        id: '69048cdd228db479bb634a90',
+        name: 'Fashion',
+        image: 'https://serviceapi.spicezgold.com/download/1763965324754_4819.png',
+        link: '/products?catId=69048cdd228db479bb634a90'
+      },
+      {
+        id: '69048d0c228db479bb634a95',
+        name: 'Electronics',
+        image: 'https://serviceapi.spicezgold.com/download/1761905929738_file_1734525218436_ele.png',
+        link: '/products?catId=69048d0c228db479bb634a95'
+      },
+      {
+        id: '69048d34228db479bb634a9a',
+        name: 'Bags',
+        image: 'https://serviceapi.spicezgold.com/download/1761905971086_file_1734525231018_bag.png',
+        link: '/products?catId=69048d34228db479bb634a9a'
+      },
+      {
+        id: '69048d41228db479bb634a9f',
+        name: 'Footwear',
+        image: 'https://serviceapi.spicezgold.com/download/1761905982766_file_1734525239704_foot.png',
+        link: '/products?catId=69048d41228db479bb634a9f'
+      },
+      {
+        id: '69048d4e228db479bb634aa4',
+        name: 'Groceries',
+        image: 'https://serviceapi.spicezgold.com/download/1761905996339_file_1734525248057_gro.png',
+        link: '/products?catId=69048d4e228db479bb634aa4'
+      },
+      {
+        id: '69048d57228db479bb634aa9',
+        name: 'Beauty',
+        image: 'https://serviceapi.spicezgold.com/download/1761906005923_file_1734525255799_beauty(1).png',
+        link: '/products?catId=69048d57228db479bb634aa9'
+      },
+      {
+        id: '69048d61228db479bb634aae',
+        name: 'Wellness',
+        image: 'https://serviceapi.spicezgold.com/download/1761906015678_file_1734525275367_well.png',
+        link: '/products?catId=69048d61228db479bb634aae'
+      },
+      {
+        id: '69048d6b228db479bb634ab3',
+        name: 'Jewellery',
+        image: 'https://serviceapi.spicezgold.com/download/1761906025549_file_1734525286186_jw.png',
+        link: '/products?catId=69048d6b228db479bb634ab3'
+      }
+    ],
+    []
+  );
 
   // Prepare products for display - map products from data.js to format expected by ProductCard
-  const prepareProductsForDisplay = (productsList) => {
-    return productsList.map(product => ({
+  const prepareProductsForDisplay = (productsList) =>
+    productsList.map(product => ({
       ...product,
       hoverImage: product.images && product.images.length > 1 ? product.images[1] : null,
       brand: product.brand || 'Brand'
     }));
-  };
 
   // Popular Products - filter by selected category or show all
   const getPopularProducts = () => {
@@ -139,34 +114,39 @@ const Home = () => {
     return products.filter(p => p.category === mappedCategory);
   };
 
-  const currentProducts = prepareProductsForDisplay(getPopularProducts());
+  const currentProducts = useMemo(
+    () => prepareProductsForDisplay(getPopularProducts()),
+    [selectedCategory]
+  );
 
   // Latest Products - show all products (or you can filter by date/rating if needed)
-  const latestProducts = prepareProductsForDisplay(products);
+  const latestProducts = useMemo(() => prepareProductsForDisplay(products), []);
 
-  const bannerSlides = [
-    {
-      id: 'banner-1',
-      image: '/images/banner-2.png',
-      link: '/products?catId=67cfa3233c7fa6b8e3276e3d'
-    },
-    {
-      id: 'banner-2',
-      image: '/images/banner-1.png',
-      link: '/products?catId=69048d4e228db479bb634aa4'
-    },
-    {
-      id: 'banner-3',
-      image: '/images/banner-3.png',
-      link: '/products?subCatId=690498a5228db479bb63d529'
-    },
-    {
-      id: 'banner-4',
-      image: '/images/banner-4.png',
-      link: '/products?catId=690498a5228db479bb63d529'
-    }
-    
-  ];
+  const bannerSlides = useMemo(
+    () => [
+      {
+        id: 'banner-1',
+        image: '/images/banner-2.png',
+        link: '/products?catId=67cfa3233c7fa6b8e3276e3d'
+      },
+      {
+        id: 'banner-2',
+        image: '/images/banner-1.png',
+        link: '/products?catId=69048d4e228db479bb634aa4'
+      },
+      {
+        id: 'banner-3',
+        image: '/images/banner-3.png',
+        link: '/products?subCatId=690498a5228db479bb63d529'
+      },
+      {
+        id: 'banner-4',
+        image: '/images/banner-4.png',
+        link: '/products?catId=690498a5228db479bb63d529'
+      }
+    ],
+    []
+  );
 
   return (
     <div className="min-h-screen">
@@ -194,6 +174,8 @@ const Home = () => {
                     src={image}
                     alt={`Banner slide ${index + 1}`}
                     className="w-full h-full object-cover object-center"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </SwiperSlide>
@@ -236,6 +218,8 @@ const Home = () => {
                       src={category.image}
                       alt={category.name}
                       className="w-[40px] lg:w-[60px] transition-all"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <h3 className="text-[12px] lg:text-[15px] font-[500] mt-3">
                       {category.name}
@@ -282,32 +266,54 @@ const Home = () => {
                   <SwiperSlide style={{ width: 'auto' }}>
                     <button
                       onClick={() => setSelectedCategory('all')}
-                      className={`px-0 py-2 text-[14px] font-[500] whitespace-nowrap transition-colors relative focus:outline-none focus:ring-0 ${
+                      className={`px-0 py-2 text-[14px] font-[500] whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] relative outline-none focus:outline-none focus-visible:outline-none active:outline-none overflow-hidden group ${
                         selectedCategory === 'all'
                           ? 'text-primary'
                           : 'text-[rgba(0,0,0,0.8)] hover:text-primary'
                       }`}
                     >
-                      All
-                      {selectedCategory === 'all' && (
-                        <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary"></span>
-                      )}
+                      <span className="relative inline-block">
+                        All
+                      </span>
+                      {/* Animated underline - slides in from left on hover */}
+                      <span 
+                        className={`
+                          absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-[#ff5252] to-[#ff6b6b]
+                          transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                          shadow-[0_2px_4px_rgba(255,82,82,0.3)]
+                          ${selectedCategory === 'all' 
+                            ? 'w-full opacity-100' 
+                            : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                          }
+                        `}
+                      />
                     </button>
                   </SwiperSlide>
                   {['Electronics', 'Clothing', 'Accessories', 'Home & Living'].map((categoryName) => (
                     <SwiperSlide key={categoryName} style={{ width: 'auto' }}>
                       <button
                         onClick={() => setSelectedCategory(categoryName)}
-                        className={`px-0 py-2 text-[14px] font-[500] whitespace-nowrap transition-colors relative focus:outline-none focus:ring-0 ${
+                        className={`px-0 py-2 text-[14px] font-[500] whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] relative outline-none focus:outline-none focus-visible:outline-none active:outline-none overflow-hidden group ${
                           selectedCategory === categoryName
                             ? 'text-primary'
                             : 'text-[rgba(0,0,0,0.8)] hover:text-primary'
                         }`}
                       >
-                        {categoryName}
-                        {selectedCategory === categoryName && (
-                          <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary"></span>
-                        )}
+                        <span className="relative inline-block">
+                          {categoryName}
+                        </span>
+                        {/* Animated underline - slides in from left on hover */}
+                        <span 
+                          className={`
+                            absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-[#ff5252] to-[#ff6b6b]
+                            transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                            shadow-[0_2px_4px_rgba(255,82,82,0.3)]
+                            ${selectedCategory === categoryName 
+                              ? 'w-full opacity-100' 
+                              : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                            }
+                          `}
+                        />
                       </button>
                     </SwiperSlide>
                   ))}
@@ -317,31 +323,53 @@ const Home = () => {
               <div className="hidden lg:flex items-center justify-end gap-4 lg:gap-6">
                 <button
                   onClick={() => setSelectedCategory('all')}
-                  className={`px-0 py-2 text-[14px] font-[500] whitespace-nowrap transition-colors relative focus:outline-none focus:ring-0 ${
+                  className={`px-0 py-2 text-[14px] font-[500] whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] relative outline-none focus:outline-none focus-visible:outline-none active:outline-none overflow-hidden group ${
                     selectedCategory === 'all'
                       ? 'text-primary'
                       : 'text-[rgba(0,0,0,0.8)] hover:text-primary'
                   }`}
                 >
-                  All
-                  {selectedCategory === 'all' && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary"></span>
-                  )}
+                  <span className="relative inline-block">
+                    All
+                  </span>
+                  {/* Animated underline - slides in from left on hover */}
+                  <span 
+                    className={`
+                      absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-[#ff5252] to-[#ff6b6b]
+                      transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                      shadow-[0_2px_4px_rgba(255,82,82,0.3)]
+                      ${selectedCategory === 'all' 
+                        ? 'w-full opacity-100' 
+                        : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                      }
+                    `}
+                  />
                 </button>
                 {['Electronics', 'Clothing', 'Accessories', 'Home & Living'].map((categoryName) => (
                   <button
                     key={categoryName}
                     onClick={() => setSelectedCategory(categoryName)}
-                    className={`px-0 py-2 text-[14px] font-[500] whitespace-nowrap transition-colors relative focus:outline-none focus:ring-0 ${
+                    className={`px-0 py-2 text-[14px] font-[500] whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] relative outline-none focus:outline-none focus-visible:outline-none active:outline-none overflow-hidden group ${
                       selectedCategory === categoryName
                         ? 'text-primary'
                         : 'text-[rgba(0,0,0,0.8)] hover:text-primary'
                     }`}
                   >
-                    {categoryName}
-                    {selectedCategory === categoryName && (
-                      <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary"></span>
-                    )}
+                    <span className="relative inline-block">
+                      {categoryName}
+                    </span>
+                    {/* Animated underline - slides in from left on hover */}
+                    <span 
+                      className={`
+                        absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-[#ff5252] to-[#ff6b6b]
+                        transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                        shadow-[0_2px_4px_rgba(255,82,82,0.3)]
+                        ${selectedCategory === categoryName 
+                          ? 'w-full opacity-100' 
+                          : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                        }
+                      `}
+                    />
                   </button>
                 ))}
               </div>
@@ -455,11 +483,13 @@ const Home = () => {
               <SwiperSlide key={banner.id} style={{ width: 'auto', minWidth: '320px', maxWidth: '380px', display: 'flex', alignItems: 'flex-end' }}>
                 <div className="box bannerBox overflow-hidden rounded-lg group w-full">
                   <Link to={banner.link} className="text-[16px] font-[600] link block w-full">
-                    <img
-                      src={banner.image}
-                      alt="banner"
-                      className="w-full h-auto transition-all group-hover:scale-105 group-hover:rotate-1"
-                    />
+                      <img
+                        src={banner.image}
+                        alt="banner"
+                        className="w-full h-auto transition-all group-hover:scale-105 group-hover:rotate-1"
+                        loading="lazy"
+                        decoding="async"
+                      />
                   </Link>
                 </div>
               </SwiperSlide>

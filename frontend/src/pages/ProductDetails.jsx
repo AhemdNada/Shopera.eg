@@ -13,22 +13,23 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
 
   const product = products.find(p => p.id === parseInt(id));
-  const relatedProducts = products
-    .filter(p => p.category === product?.category && p.id !== product.id)
-    .slice(0, 4);
 
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-          <Link to="/products" className="text-blue-600 hover:text-blue-700">
+          <Link to="/products" className="text-blue-600 hover:text-blue-700 focus:outline-none">
             Back to Products
           </Link>
         </div>
       </div>
     );
   }
+
+  const relatedProducts = products
+    .filter(p => p.category === product.category && p.id !== product.id)
+    .slice(0, 4);
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
@@ -43,11 +44,11 @@ const ProductDetails = () => {
         <nav className="flex mb-8" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-4">
             <li>
-              <Link to="/" className="text-gray-400 hover:text-gray-500">Home</Link>
+              <Link to="/" className="text-gray-400 hover:text-gray-500 focus:outline-none">Home</Link>
             </li>
             <li>
               <span className="text-gray-400">/</span>
-              <Link to="/products" className="ml-4 text-gray-400 hover:text-gray-500">Products</Link>
+              <Link to="/products" className="ml-4 text-gray-400 hover:text-gray-500 focus:outline-none">Products</Link>
             </li>
             <li>
               <span className="text-gray-400">/</span>
@@ -64,6 +65,8 @@ const ProductDetails = () => {
                 src={product.images[selectedImage]}
                 alt={product.name}
                 className="w-full h-96 object-cover rounded-2xl shadow-lg"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div className="flex space-x-4 overflow-x-auto">
@@ -71,7 +74,7 @@ const ProductDetails = () => {
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
+                  className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 focus:outline-none ${
                     selectedImage === index ? 'border-blue-600' : 'border-gray-200'
                   }`}
                 >
@@ -79,6 +82,8 @@ const ProductDetails = () => {
                     src={image}
                     alt={`${product.name} ${index + 1}`}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </button>
               ))}
@@ -142,33 +147,34 @@ const ProductDetails = () => {
                 <div className="flex items-center border border-gray-300 rounded-lg">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-4 py-2 text-gray-600 hover:text-gray-700"
+                    className="px-4 py-2 text-gray-600 hover:text-gray-700 focus:outline-none"
                   >
                     -
                   </button>
                   <span className="px-4 py-2 text-gray-900 font-semibold">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="px-4 py-2 text-gray-600 hover:text-gray-700"
+                    className="px-4 py-2 text-gray-600 hover:text-gray-700 focus:outline-none"
                   >
                     +
                   </button>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+              <div className="flex flex-row space-x-2 sm:space-x-4">
                 <Button
                   onClick={handleAddToCart}
                   disabled={!product.inStock}
+                  variant="outline"
                   size="lg"
-                  className="flex-1"
+                  className="flex-1 text-sm sm:text-lg px-3 py-2 sm:px-6 sm:py-3"
                 >
                   {product.inStock ? 'Add to Cart' : 'Out of Stock'}
                 </Button>
                 <Button
                   variant="outline"
                   size="lg"
-                  className="flex-1"
+                  className="flex-1 text-sm sm:text-lg px-3 py-2 sm:px-6 sm:py-3"
                 >
                   Buy Now
                 </Button>

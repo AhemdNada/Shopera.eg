@@ -1,10 +1,10 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { products, categories } from '../utils/data';
 import ProductCard from '../components/common/ProductCard';
 
 const Products = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [sortBy, setSortBy] = useState('name');
   
   // Max price for filter
@@ -29,6 +29,7 @@ const Products = () => {
 
     // Filter by price range
     filtered = filtered.filter(product => 
+      
       product.price >= priceRange[0] && product.price <= priceRange[1]
     );
 
@@ -50,31 +51,51 @@ const Products = () => {
     return filtered;
   }, [selectedCategories, priceRange, sortBy]);
 
+  // Sync with URL when it changes from Navbar links
+  // Navbar links set a single category (independent from sidebar filters)
+  // Sidebar filters work independently and allow multiple selections
+  const urlCategoryRef = useRef(searchParams.get('category'));
+  
+  useEffect(() => {
+    const urlCategory = searchParams.get('category');
+    
+    // Only update if URL category actually changed (from Navbar click)
+    if (urlCategoryRef.current !== urlCategory) {
+      urlCategoryRef.current = urlCategory;
+      
+      if (urlCategory && urlCategory !== 'all') {
+        // When Navbar link is clicked, set only that category
+        setSelectedCategories([urlCategory]);
+      } else if (!urlCategory || urlCategory === 'all') {
+        // When "All Products" is clicked, clear categories
+        setSelectedCategories([]);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams.toString()]);
+
   // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategories, priceRange, sortBy]);
 
-  // Initialize from URL only once on mount
-  useEffect(() => {
-    const urlCategory = searchParams.get('category');
-    if (urlCategory) {
-      setSelectedCategories([urlCategory]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run on mount
-
   const handleCategoryChange = (categoryId) => {
-    if (categoryId === 'all') {
-      setSelectedCategories([]);
-      return;
-    }
+    let updatedCategories;
     
-    const updatedCategories = selectedCategories.includes(categoryId)
-      ? selectedCategories.filter(id => id !== categoryId)
-      : [...selectedCategories, categoryId];
+    if (categoryId === 'all') {
+      updatedCategories = [];
+    } else {
+      // Toggle category selection - add if not present, remove if present
+      updatedCategories = selectedCategories.includes(categoryId)
+        ? selectedCategories.filter(id => id !== categoryId)
+        : [...selectedCategories, categoryId];
+    }
     
     setSelectedCategories(updatedCategories);
+    
+    // Don't update URL when changing categories from sidebar
+    // This allows multiple category selection without interfering with Navbar
+    // URL will only change when user clicks Navbar links
   };
 
   const clearFilters = () => {
@@ -82,6 +103,11 @@ const Products = () => {
     setPriceRange([0, 20000]);
     setSortBy('name');
     setCurrentPage(1);
+    
+    // Clear category from URL
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.delete('category');
+    setSearchParams(newSearchParams, { replace: true });
   };
 
   // Pagination calculations
@@ -239,7 +265,7 @@ const Products = () => {
             {/* Products Grid */}
             {filteredProducts.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                   {currentProducts.map(product => (
                     <ProductCard key={product.id} product={product} />
                   ))}

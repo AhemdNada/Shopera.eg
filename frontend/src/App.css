@@ -185,8 +185,20 @@ textarea:focus {
   cursor: pointer;
 }
 
-.rightSec .flex button:focus {
-  outline: none;
+.rightSec .flex button:focus,
+.rightSec .flex button:active,
+.rightSec .flex button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Category filter buttons in Popular Products section */
+.categoryFilterSwiper button,
+.categoryFilterSwiper button:focus,
+.categoryFilterSwiper button:active,
+.categoryFilterSwiper button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Hide scrollbar but allow scrolling on mobile if needed */

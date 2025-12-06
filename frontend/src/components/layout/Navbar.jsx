@@ -145,19 +145,52 @@ const Navbar = () => {
       >
         {categoriesList.map((cat) => {
           const targetCategory = cat.categoryId || cat.id;
-          const to = cat.path || `/products?category=${encodeURIComponent(targetCategory)}`;
+          // Handle "All Products" - go to /products without category param
+          const to = cat.path || (cat.id === 'all' ? '/products' : `/products?category=${encodeURIComponent(targetCategory)}`);
           const isActive = cat.id === 'home'
             ? location.pathname === '/'
-            : isProductsPage && activeCategory === targetCategory;
+            : isProductsPage && (cat.id === 'all' 
+                ? !activeCategory || activeCategory === 'all' 
+                : activeCategory === targetCategory);
           return (
             <SwiperSlide key={cat.id} className="!w-auto flex items-center h-full">
               <Link
                 to={to}
-                className={`px-3 text-[14px] font-[500] transition text-[rgba(0,0,0,0.8)] hover:text-[#ff5252] ${
-                  isActive ? 'text-[#ff5252]' : ''
-                }`}
+                className={`
+                  relative px-4 py-2 text-[14px] font-[500] 
+                  text-[rgba(0,0,0,0.8)] 
+                  transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                  group overflow-hidden
+                  ${isActive 
+                    ? 'text-[#ff5252]' 
+                    : 'hover:text-[#ff5252]'
+                  }
+                `}
               >
-                {cat.label}
+                {/* Animated underline - slides in from left on hover */}
+                <span 
+                  className={`
+                    absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-[#ff5252] to-[#ff6b6b]
+                    transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                    shadow-[0_2px_4px_rgba(255,82,82,0.3)]
+                    ${isActive 
+                      ? 'w-full opacity-100' 
+                      : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                    }
+                  `}
+                />
+                
+                {/* Text content */}
+                <span className="relative inline-block">
+                  {cat.label}
+                </span>
+                
+                {/* Active indicator dot - appears smoothly */}
+                {isActive && (
+                  <span 
+                    className="absolute -top-0.5 right-1 w-1.5 h-1.5 bg-[#ff5252] rounded-full opacity-100 transition-all duration-300"
+                  />
+                )}
               </Link>
             </SwiperSlide>
           );
